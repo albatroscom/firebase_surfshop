@@ -11,7 +11,7 @@ const config = {
   storageBucket : "react-tutorial-49e45.appspot.com"
 };
 
-const firebase = firebase.initializeApp(config);
+const fb = firebase.initializeApp(config);
 
 class App extends Component {
   render() {
@@ -51,6 +51,15 @@ class Shops extends React.Component {
       }
     });
     this.setState(newState);
+  }
+
+  componentWillUpdate(nextProps, nextState) {
+    //console.log("componentWillUpdate: " + JSON.stringify(nextProps) + " " + JSON.stringify(nextState));
+    //console.log(JSON.stringify(nextState.shopData));
+
+    for (var index = 0; index < nextState.shopData.length; index++) {
+      console.log(nextState.shopData[index]);
+    }
   }
 
   render() {
