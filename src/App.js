@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
 import update from 'react-addons-update';
-import firebase from 'firebase';
+import * as firebase from 'firebase';
 
 const config = {
   apiKey : "AIzaSyC1o99ZDjfgb8j0fSXgWNrVy-8ohgMNMQw",
@@ -10,8 +10,8 @@ const config = {
   databaseURL : "https://react-tutorial-49e45.firebaseio.com",
   storageBucket : "react-tutorial-49e45.appspot.com"
 };
-
-const fb = firebase.initializeApp(config);
+firebase.initializeApp(config);
+var database = firebase.database();
 
 class App extends Component {
   render() {
@@ -56,10 +56,15 @@ class Shops extends React.Component {
   componentWillUpdate(nextProps, nextState) {
     //console.log("componentWillUpdate: " + JSON.stringify(nextProps) + " " + JSON.stringify(nextState));
     //console.log(JSON.stringify(nextState.shopData));
-
-    for (var index = 0; index < nextState.shopData.length; index++) {
-      console.log(nextState.shopData[index]);
-    }
+    //console.log(Object.keys(nextState.shopData[0]));
+    //for(var key in nextState.shopData[0]) {
+        //console.log("key : " + key);
+        //console.log("data : " + nextState.shopData[0][key]);
+    //}
+    var newShopKey = database.ref().child('/Shops/').push().key;
+    var updates = {};
+    updates['/Shops/' + newShopKey] =  nextState.shopData[0];
+    firebase.database().ref().update(updates);
   }
 
   render() {
