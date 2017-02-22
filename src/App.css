@@ -20,6 +20,7 @@
 
 .ul-insert-input li {
   list-style : none;
+  -webkit-padding-start: 0px;
 }
 
 @keyframes App-logo-spin {

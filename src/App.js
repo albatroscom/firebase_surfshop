@@ -74,6 +74,7 @@ class Shops extends React.Component {
           <img src={logo} className="App-logo" alt="logo" />
           <h2>Surf Shop v0.1</h2>
         </div>
+        <Login />
         <ShopCreator onInsert={this._insertShop.bind(this)} />
         {this.state.shopData.map((shop, i) => {
           return(<ShopInfo 
@@ -93,6 +94,41 @@ class Shops extends React.Component {
             key={i}
            />);
         })}
+      </div>
+    );
+  }
+}
+
+class Login extends React.Component {
+ 
+  handleLoginClick() {
+    var provider = new firebase.auth.GoogleAuthProvider();
+    firebase.auth().signInWithPopup(provider).then(function(result) {
+    }).catch(function(error) {
+      alert(error.message);
+    });
+
+    firebase.auth().onAuthStateChanged(function(user) {
+      if (user) {
+        console.log(user);
+      }
+    });
+  }
+
+  handleLogoutClick() {
+    firebase.auth().signOut().then(function() {
+      alert("logout!");
+    }).catch(function(error) {
+      alert(error.message);
+    });
+  }
+
+  render() {
+    return(
+      <div>
+        <span ref={ref => this.span = ref}></span>
+        <button onClick={this.handleLoginClick.bind(this)}>Sign in with Google</button>
+        <button onClick={this.handleLogoutClick.bind(this)}>Sign Out with Google</button>
       </div>
     );
   }
