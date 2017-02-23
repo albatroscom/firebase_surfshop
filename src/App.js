@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import './App.css';
 import update from 'react-addons-update';
+import Header from './components/Header';
 import * as firebase from 'firebase';
 
 const config = {
@@ -16,7 +16,11 @@ var database = firebase.database();
 class App extends Component {
   render() {
     return (
-      <Shops />
+      <div>
+        <Header />
+        {this.props.children}
+        <Shops />
+      </div>
     );
   }
 }
@@ -54,6 +58,7 @@ class Shops extends React.Component {
   }
 
   componentWillUpdate(nextProps, nextState) {
+    /* !!! CAUTION :: this.setState() 사용하지 말것 무한루프 !!! */
     //console.log("componentWillUpdate: " + JSON.stringify(nextProps) + " " + JSON.stringify(nextState));
     //console.log(JSON.stringify(nextState.shopData));
     //console.log(Object.keys(nextState.shopData[0]));
@@ -61,19 +66,17 @@ class Shops extends React.Component {
         //console.log("key : " + key);
         //console.log("data : " + nextState.shopData[0][key]);
     //}
-    var newShopKey = database.ref().child('/Shops/').push().key;
-    var updates = {};
-    updates['/Shops/' + newShopKey] =  nextState.shopData[0];
-    firebase.database().ref().update(updates);
+    if (nextState.shopData.length > 0) {
+      var newShopKey = database.ref().child('/Shops/').push().key;
+      var updates = {};
+      updates['/Shops/' + newShopKey] =  nextState.shopData[0];
+      firebase.database().ref().update(updates);
+    }
   }
 
   render() {
     return (
       <div className="App">
-        <div className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h2>Surf Shop v0.1</h2>
-        </div>
         <Login />
         <ShopCreator onInsert={this._insertShop.bind(this)} />
         {this.state.shopData.map((shop, i) => {
@@ -100,6 +103,14 @@ class Shops extends React.Component {
 }
 
 class Login extends React.Component {
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      loginTxt : "Sign In with Google",
+      logoutTxt : "Sign Out with Google"
+    };
+  }
  
   handleLoginClick() {
     var provider = new firebase.auth.GoogleAuthProvider();
@@ -126,9 +137,9 @@ class Login extends React.Component {
   render() {
     return(
       <div>
-        <span ref={ref => this.span = ref}></span>
-        <button onClick={this.handleLoginClick.bind(this)}>Sign in with Google</button>
-        <button onClick={this.handleLogoutClick.bind(this)}>Sign Out with Google</button>
+        <button onClick={this.handleLoginClick.bind(this)}>{this.state.loginTxt}</button>
+        {" "}
+        <button onClick={this.handleLogoutClick.bind(this)}>{this.state.logoutTxt}</button>
       </div>
     );
   }
