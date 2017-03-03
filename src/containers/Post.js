@@ -1,12 +1,12 @@
 import React from 'react';
-import BigText from '../components/BigText';
 
 const Post = ({params}) => {
-      return(
-            <div>
-                  <BigText>{params.id}</BigText>
-            </div>
-      );
-}
+    return (
+        <div>
+            {params.id}
+        </div>
+    );
+};
+
 
 export default Post;

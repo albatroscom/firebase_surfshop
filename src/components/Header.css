@@ -27,9 +27,9 @@
 }
 
 .menu-item:hover {
-    background-color: #495057;
+    /*background-color: #495057;*/
 }
 
 .menu-item:active, .menu-item.active {
-    background-color: #1862ab;
+    /*background-color: #1862ab;*/
 }

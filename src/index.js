@@ -7,6 +7,7 @@ import Home from './containers/Home';
 import About from './containers/About';
 import Posts from './containers/Posts';
 import Post from './containers/Post';
+import Setting from './containers/Setting';
 
 import './index.css';
 
@@ -15,7 +16,8 @@ ReactDOM.render(
     <Route path="/" component={App}>
       <IndexRoute component={Home}/>
       <Route path="about" component={About}/>
-      <Route path="Post" component={Posts}>
+      <Route path="setting" component={Setting}/>
+      <Route path="post" component={Posts}>
         <Route path=":id" component={Post} />
       </Route>
     </Route>

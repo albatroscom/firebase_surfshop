@@ -1,0 +1,1 @@
+import { firebaseDb } from './firebase';

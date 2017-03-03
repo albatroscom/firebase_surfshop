@@ -23,6 +23,14 @@
   -webkit-padding-start: 0px;
 }
 
+.auth-button-hide {
+  display: none;
+}
+
+.auth-button {
+  display: '';
+}
+
 @keyframes App-logo-spin {
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
